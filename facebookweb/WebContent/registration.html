@@ -1,0 +1,151 @@
+<html> 
+
+	<head>
+		<title>Registration Page</title>
+		
+		<script>
+			function loadCountry(){
+				//step 1 how to get xhr
+				xhr=new XMLHttpRequest();
+				//step 2 how xhr will open connection with server
+				xhr.open("get","data.js",true);
+				//step 3 how xhr will send request
+				xhr.send();
+				//step 4 how xhr will get response
+				xhr.onreadystatechange=function(){
+					if(xhr.readyState==4 && xhr.status==200){
+						
+						eval("var v="+xhr.responseText+";");
+						var v1="<tr><td>Country</td><td><select name=country id=state onchange=loadState()>";
+						for(i=0;i<v.length;i++){
+							v1=v1+"<option value="+v[i].countryName+">"+v[i].countryName+"</option>";
+						}
+						v1=v1+"</select></td></tr>";
+						alert(v1);
+						document.getElementById("cou").innerHTML=v1;
+						//alert(xhr.responseText);
+					}
+				}
+			}
+			
+			function loadState(){
+				
+				var v3=document.getElementById("state").value;
+				//step 1 how to get xhr
+				xhr=new XMLHttpRequest();
+				//step 2 how xhr will open connection with server
+				xhr.open("get","data.js",true);
+				//step 3 how xhr will send request
+				xhr.send();
+				//step 4 how xhr will get response
+				xhr.onreadystatechange=function(){
+					if(xhr.readyState==4 && xhr.status==200){
+						
+						eval("var v="+xhr.responseText+";");
+						var v1="<tr><td>State</td><td><select name=state id=city onchange=loadCity()>";
+						for(i=0;i<v.length;i++){
+							if(v[i].countryName==v3){
+								for(j=0;j<v[i].state.length;j++){
+									v1=v1+"<option value="+v[i].state[j].stateName+">"+v[i].state[j].stateName+"</option>";
+								}
+						   }
+						}
+						v1=v1+"</select></td></tr>";
+						alert(v1);
+						document.getElementById("st").innerHTML=v1;
+						//alert(xhr.responseText);
+					}
+				}
+			}
+			
+			function gcaptcha(){
+				v=parseInt((Math.random())*1000);
+				document.getElementById("captcha").innerHTML=
+					"<tr>"
+						+"<td>capcha</td>"
+						+"<td><input type=nval id=c2 value="+v+" disabled>"
+						+"<input type=button value=refresh onclick=gcaptcha()></td>"
+					+"</tr>"
+					+"<tr><td>Enter above Text</td>"
+					+"<td><input type=text id=cvv onblur=checkCaptcha()></td></tr>";
+			}
+			function checkCaptcha(){
+				cv1=document.getElementById("c2").value;
+				cv2=document.getElementById("cvv").value;
+				if(cv1==cv2){
+					document.getElementById("b").disabled=false;
+				}
+				else{
+					gcaptcha();
+					document.getElementById("cvv").focus();
+				}
+			}
+		</script>
+		
+		<style>
+			.p1 {color:blue;}
+		</style>
+		
+	</head>
+	<body bgcolor=pink  onload="loadCountry()">
+		<p class=p1 align=center><font size=5><b>Registration Page</b></font></p>
+	
+		<div align=center>
+			<table border=2>
+			    <form action="http://localhost:8080/facebookweb/RegisterServlet" method=post>
+				<tr>
+					<td>Name </td><td><input type=text name="name"></td>
+				</tr>
+				<tr>
+					<td>Password </td><td><input type=password name="pass"></td>
+				</tr>
+				<tr>
+					<td>Email </td><td><input type=email name="email"></td>
+				</tr>
+				<tr>
+					<td>Address </td><td><input type=text name="address"></td>
+				</tr>
+				<tr>
+					<td>Age </td><td><input type=number name="age"></td>
+				</tr>
+				<tr>
+					<td>Gender </td><td><input type=radio name=g value=male>Male<input type=radio name=g value>Female</td>
+				</tr>
+				<tr>
+					<td>Hobbies </td><td><input type=checkbox name=h value=dance>Dance<input type=checkbox name=h value=car>Car<input type=checkbox name=h value=sport>sport</td>
+				</tr>
+				<tr>
+					<td>DOB </td><td><input type=date name=dob></td>
+				</tr>
+				<tr id="cou"></tr>
+				<tr id="st"></tr>
+				<tr>
+					<td>UPLOAD Profile </td><td><input type=file name=profile onblur="gcaptcha()"></td>
+				</tr>
+				<tr id=captcha>
+				</tr>
+				
+				<tr>
+					<td><input type=submit id="b" value=Register disabled></td><td><input type=reset></td>
+				</tr>
+				
+			   </form>
+			</table>
+			<a href=login.html>Sign In</a>
+		</div>
+
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
