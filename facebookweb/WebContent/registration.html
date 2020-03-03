@@ -8,7 +8,7 @@
 				//step 1 how to get xhr
 				xhr=new XMLHttpRequest();
 				//step 2 how xhr will open connection with server
-				xhr.open("get","data.js",true);
+				xhr.open("post","GlobalServlet?action=loadcountry",true);
 				//step 3 how xhr will send request
 				xhr.send();
 				//step 4 how xhr will get response

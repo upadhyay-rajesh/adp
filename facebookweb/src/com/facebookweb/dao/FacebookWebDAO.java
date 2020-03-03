@@ -5,7 +5,11 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.facebookweb.entity.Country;
+import com.facebookweb.entity.Customer;
 import com.facebookweb.entity.FacebookEmployee;
 import com.facebookweb.entity.FacebookLogin;
 
@@ -85,6 +89,50 @@ public class FacebookWebDAO implements FacebookWebDAOInterface {
 			ResultSet res=ps.executeQuery();
 			if(res.next()){
 				b=true;
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return b;
+	}
+
+	@Override
+	public List<Country> loadCountryDAO() {
+		List<Country> b=new ArrayList<Country>();
+		try{
+			//step 3 create query
+			PreparedStatement ps=con.prepareStatement(
+					"select * from HSBC_FIRST.country");
+			ResultSet res=ps.executeQuery();
+			while(res.next()){
+				Country c=new Country();
+				c.setCountryId(res.getString(1));
+				c.setCountryName(res.getString(2));
+				
+				b.add(c);
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return b;
+	}
+
+	@Override
+	public List<Customer> checkBalance() {
+		List<Customer> b=new ArrayList<Customer>();
+		try{
+			//step 3 create query
+			PreparedStatement ps=con.prepareStatement(
+					"select * from HSBC_FIRST.Customer where balance<'"+10000+"'");
+			ResultSet res=ps.executeQuery();
+			while(res.next()){
+				Customer c=new Customer();
+				c.setName(res.getString(1));
+				c.setAddress(res.getString(2));
+				c.setBalance(Double.parseDouble(res.getString(3)));
+				b.add(c);
 			}
 		}
 		catch(Exception e){

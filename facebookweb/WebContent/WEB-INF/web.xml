@@ -49,4 +49,14 @@
     <servlet-name>LogoutServlet</servlet-name>
     <url-pattern>/LogoutServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GlobalServlet</display-name>
+    <servlet-name>GlobalServlet</servlet-name>
+    <servlet-class>com.facebookweb.controller.GlobalServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GlobalServlet</servlet-name>
+    <url-pattern>/GlobalServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
